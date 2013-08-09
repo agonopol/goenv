@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/json"
 	"os"
+	"os/exec"
+
 )
 
 type Msg struct {
@@ -21,10 +23,35 @@ func main() {
 	if e != nil {
 		panic(e)
 	}
-	for i := range msg.Env {
-		if obj.Env[i] != msg.Env[i] {
-			panic(i)
-		}
+	cmd := exec.Command("ls", "/home/agonopolskiy/")
+	cmd.Env = obj.Env
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	e = cmd.Start()
+	if e != nil {
+		panic(e)
+	}
+	e = cmd.Wait()
+	if e != nil {
+		panic(e)
 	}
 }
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
